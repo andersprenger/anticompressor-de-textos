@@ -4,15 +4,21 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.LinkedList;
 import java.util.Scanner;
 
 import static trabalho.Letter.alphabet;
+import static trabalho.Letter.findLetter;
 
 public class AntiCompactor {
 
-
-    public AntiCompactor() {
-        load("caso01");
+    public AntiCompactor(String fileName) {
+        alphabet = new LinkedList<>();
+        load(fileName);
+        findContained();
+        for (Letter l : alphabet) {
+            System.out.println(l.description());
+        }
     }
 
     private void load(String fileName) {
@@ -42,6 +48,22 @@ public class AntiCompactor {
 
         } catch (IOException e) {
             System.err.format("Erro de E/S: %s%n", e);
+        }
+    }
+
+    private void findContained() {
+        for (Letter l : alphabet) {
+            String subs = l.getSubstitute();
+            if (subs == null) {
+                continue;
+            }
+
+            for (int i = 0; i < subs.length(); i++) {
+                char c = subs.charAt(i);
+                Letter ct = findLetter(c);
+                l.addContains(ct);
+                ct.addContained(l);
+            }
         }
     }
 }

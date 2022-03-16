@@ -5,11 +5,11 @@ import java.util.List;
 
 public class Letter {
     static List<Letter> alphabet = new LinkedList<>();
-    private Character character;
-    private String substitute;
+    private final Character character;
+    private final String substitute;
 
-    private List<Letter> contained;
-    private List<Letter> contains;
+    private final List<Letter> contained;
+    private final List<Letter> contains;
 
     public Letter(Character character, String substitute) {
         this.character = character;
@@ -43,11 +43,25 @@ public class Letter {
         this.contains.add(l);
     }
 
+    public static Letter findLetter(char c) {
+        for (Letter l : alphabet) {
+            if (l.getCharacter() == c) {
+                return l;
+            }
+        }
+
+        throw new RuntimeException("Letter " + c + " not found.");
+    }
+
+    public String description() {
+        return "Letter " + character + '\n' +
+               "Substitute: " + substitute + '\n' +
+               "Contained by: " + contained + '\n' +
+               "Contains these: " + contains + '\n';
+    }
+
     @Override
     public String toString() {
-        return "Letter{" +
-                "character=" + character +
-                ", substitute=" + substitute +
-                '}';
+        return character.toString().toUpperCase();
     }
 }
