@@ -16,9 +16,18 @@ public class AntiCompactor {
         alphabet = new LinkedList<>();
         load(fileName);
         findContained();
+
+//        for (Letter l : alphabet) {
+//            System.out.println(l.description());
+//        }
+
+        System.out.print(fileName + " ");
         for (Letter l : alphabet) {
-            System.out.println(l.description());
+            if (l.getContained().isEmpty() && !l.getContains().isEmpty()) {
+                System.out.print(l);
+            }
         }
+        System.out.println();
     }
 
     private void load(String fileName) {
@@ -34,14 +43,12 @@ public class AntiCompactor {
                         String subs = line[1];
                         Letter letter = new Letter(l, subs);
                         alphabet.add(letter);
-                        System.out.println(letter);
                     }
 
                     case 1 -> {
                         char l = line[0].charAt(0);
                         Letter letter = new Letter(l, null);
                         alphabet.add(letter);
-                        System.out.println(letter);
                     }
                 }
             }
@@ -61,8 +68,12 @@ public class AntiCompactor {
             for (int i = 0; i < subs.length(); i++) {
                 char c = subs.charAt(i);
                 Letter ct = findLetter(c);
-                l.addContains(ct);
-                ct.addContained(l);
+                if (!l.getContains().contains(ct)) {
+                    l.addContains(ct);
+                }
+                if (!ct.getContained().contains(l)) {
+                    ct.addContained(l);
+                }
             }
         }
     }
