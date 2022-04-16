@@ -50,15 +50,10 @@ class AnticompressorDeArquivos {
     ///
     func carregaDependencias() {
         for letra in letras {
-            for outraLetra in letras {
-                // Se for a mesma letra, pula para a próxima.
-                if letra.caractere == outraLetra.caractere { continue }
-                
+            for outraLetra in letras where outraLetra != letra {
                 // Se a letra contem a outra letra em seu substituto, ela vai para o array contem da letra.
                 if letra.substituto != nil && letra.substituto!.contains(outraLetra.caractere) {
                     letra.contem.insert(outraLetra)
-                    // TODO: usar weight
-//                    adjacencyList.add(.directed, from: vertices[letra]!, to: vertices[outraLetra]!, weight: nil)
                 }
                 
                 // Se a outa letra contem a letra em seu substituto, ela vai para o array contem da outra letra.
