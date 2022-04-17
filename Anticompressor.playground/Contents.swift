@@ -50,15 +50,11 @@ class AnticompressorDeArquivos {
     ///
     func carregaDependencias() {
         for letra in letras {
-            for outraLetra in letras where outraLetra != letra {
-                // Se a letra contem a outra letra em seu substituto, ela vai para o array contem da letra.
+            for outraLetra in letras {
+                ///Se a letra contem a outra letra em seu substituto, ela vai para o array contem da letra, e a letra vai para o array contidoEm da outra letra.
                 if letra.substituto != nil && letra.substituto!.contains(outraLetra.caractere) {
                     letra.contem.insert(outraLetra)
-                }
-                
-                // Se a outa letra contem a letra em seu substituto, ela vai para o array contem da outra letra.
-                if outraLetra.substituto != nil && outraLetra.substituto!.contains(letra.caractere) {
-                    letra.contidaEm.insert(outraLetra)
+                    outraLetra.contidaEm.insert(letra)
                 }
             }
         }
