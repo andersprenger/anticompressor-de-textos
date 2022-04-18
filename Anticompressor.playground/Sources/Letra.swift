@@ -21,7 +21,7 @@ public class Letra {
     
     public func encontraTamanho() -> Int {
         ///Se já encontrou o tamanho, return tamanho.
-        if let tamanho = tamanho {
+        if let tamanho = self.tamanho {
             return tamanho
         }
         
@@ -40,14 +40,14 @@ public class Letra {
         for caractere in substituto {
             tamanho += tamanhoLetras[caractere]!
         }
-        
+        self.tamanho = tamanho
         return tamanho
     }
 }
     
 extension Letra: CustomStringConvertible {
     public var extenseDescription: String {
-        var str: String = "\(caractere.uppercased()) --> Substituto: \(substituto ?? "nil")"
+        var str: String = "\(caractere) --> Substituto: \(substituto ?? "nil")"
 
         str += "\nContem as letras: "
         contem.forEach { str.append(String("\($0.caractere),")) }
